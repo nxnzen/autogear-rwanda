@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AutoGear Rwanda – Car Spare Parts</title>
+<style>
+:root{
+  --bg:#f8fafc;--card:#ffffff;--ink:#0f172a;--mut:#64748b;
+  --acc:#ea580c;--acc2:#0d9488;--line:#e2e8f0;
+  --shadow:0 4px 12px rgba(0,0,0,.05);
+  box-sizing:border-box;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a;--card:#1e293b;--ink:#f8fafc;--mut:#94a3b8;
+    --line:#334155;--shadow:0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--ink:#f8fafc;--mut:#94a3b8;
+  --line:#334155;--shadow:0 4px 16px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;line-height:1.5}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+
+header{
+  position:sticky;top:0;z-index:30;
+  background:var(--card);border-bottom:1px solid var(--line);
+  padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.logo{font-weight:800;font-size:22px;white-space:nowrap}.logo b{color:var(--acc)}
+.search{flex:1;min-width:200px}
+input,select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 14px;width:100%;outline:none}
+input:focus,select:focus{border-color:var(--acc)}
+
+.ic{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;font-size:15px}
+.lang{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.lang button{background:var(--card);padding:7px 11px;font-size:13px;font-weight:600;border-right:1px solid var(--line)}
+.lang button:last-child{border-right:none}
+.lang button.on{background:var(--acc);color:#fff}
+
+.cartb{position:relative;background:var(--acc);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.cartb span#cn{background:#fff;color:var(--acc);border-radius:20px;padding:2px 8px;font-size:12px;font-weight:800}
+
+.hero{background:linear-gradient(135deg,#064e3b 0%,#0f172a 60%,#1e293b 100%);color:#fff;padding:48px 20px;text-align:center}
+.hero h1{margin:0 0 10px;font-size:clamp(26px,4vw,38px);font-weight:800}
+.hero p{margin:0 auto;max-width:600px;opacity:.9;font-size:15px}
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px;font-size:13px}
+.trust span{background:rgba(255,255,255,.12);padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1)}
+
+main{max-width:1280px;margin:0 auto;padding:24px 20px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+.bar select{width:auto;min-width:160px}
+.btn-reset{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--mut)}
+.btn-reset:hover{color:var(--ink);border-color:var(--ink)}
+
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 16px;white-space:nowrap;font-size:13px;font-weight:600}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.count{color:var(--mut);font-size:14px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.card{background:var(--card);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+
+.pic{height:160px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
+.pic img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s ease}
+.card:hover .pic img{transform:scale(1.04)}
+.badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;text-transform:uppercase;background:var(--acc2);color:#fff;border-radius:6px;padding:3px 8px}
+
+.bd{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.bd h3{margin:0;font-size:16px;font-weight:700;cursor:pointer}
+.fit{font-size:13px;color:var(--mut);flex:1}
+.price{font-weight:800;font-size:19px;color:var(--acc);margin-top:4px}
+.stk{font-size:12px;font-weight:600;color:var(--acc2)}
+.stk.o{color:#e11d48}
+
+.add{background:var(--acc);color:#fff;border-radius:10px;padding:10px;font-weight:700;margin-top:8px;width:100%}
+.add[disabled]{opacity:.5;cursor:not-allowed}
+
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.on{display:flex}
+.modal{background:var(--card);border-radius:16px;max-width:500px;width:100%;max-height:90vh;overflow:auto;padding:24px;position:relative}
+.modal .pic{height:220px;border-radius:12px;cursor:default;margin-bottom:16px}
+.x{position:absolute;top:14px;right:14px;border:1px solid var(--line);background:var(--bg);border-radius:50%;width:32px;height:32px;font-weight:700}
+
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--card);z-index:50;transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column;padding:20px;border-left:1px solid var(--line)}
+.dr.on{transform:translateX(0)}
+.items{flex:1;overflow-y:auto;margin:16px 0}
+.ci{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.ci img{width:54px;height:54px;object-fit:cover;border-radius:8px;background:#f1f5f9}
+.ci div.t{flex:1;font-size:13px}
+.q{display:flex;align-items:center;gap:6px}
+.q button{width:26px;height:26px;border:1px solid var(--line);background:var(--bg);border-radius:6px;font-weight:700}
+
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:18px;margin:16px 0}
+.f{display:grid;gap:10px}
+.send{background:#16a34a;color:#fff;border-radius:10px;padding:12px;font-weight:700;font-size:15px}
+
+footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 20px;border-top:1px solid var(--line);margin-top:40px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Auto<b>Gear</b></div>
+  <input class="search" id="q" placeholder="Search spare parts...">
+  <div class="lang">
+    <button data-l="en">EN</button>
+    <button data-l="fr">FR</button>
+    <button data-l="rw">RW</button>
+  </div>
+  <button class="ic" id="th" aria-label="Theme">🌓</button>
+  <button class="cartb" id="cb"><span>🛒</span><span id="cn">0</span></button>
+</header>
+
+<section class="hero">
+  <h1 data-i="h1">Genuine spare parts, delivered</h1>
+  <p data-i="h2">Brakes, filters, engine, electrical and more for Toyota, Suzuki, Hyundai, Honda and others.</p>
+  <div class="trust">
+    <span data-i="t1">🚚 Delivery across Rwanda</span>
+    <span data-i="t2">💳 MoMo or cash on delivery</span>
+    <span data-i="t3">✅ Quality checked</span>
+  </div>
+</section>
+
+<main>
+  <div class="bar">
+    <select id="mk"></select>
+    <select id="so"></select>
+    <button class="btn-reset" id="reset-btn" style="display:none" data-i="reset">Clear Filters</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="count" id="cnt"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer data-i="foot">© 2026 AutoGear Rwanda. Premium automotive spare parts.</footer>
+
+<div class="ov" id="ov"><div class="modal" id="md"></div></div>
+
+<div class="dr" id="dr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0;font-size:20px" data-i="cart">Your cart</h2>
+    <button class="ic" id="cx">✕</button>
+  </div>
+  <div class="items" id="items"></div>
+  <div id="foot2"></div>
+</div>
+
+<script>
+var SHOP="250788000000"; // Replace with your store WhatsApp number
+
+var T={
+en:{search:"Search spare parts...",h1:"Genuine spare parts, delivered",h2:"Brakes, filters, engine, electrical and more for Toyota, Suzuki, Hyundai, Honda and others.",t1:"🚚 Delivery across Rwanda",t2:"💳 MoMo or cash on delivery",t3:"✅ Quality checked",all:"All",allmk:"All vehicle makes",engine:"Engine",brakes:"Brakes",suspension:"Suspension",filters:"Filters",electrical:"Electrical",body:"Body",tyres:"Tyres",oils:"Oils",cooling:"Cooling",transmission:"Transmission",exhaust:"Exhaust",accessories:"Accessories",s0:"Sort: Featured",s1:"Price: low to high",s2:"Price: high to low",items:"products",add:"Add to cart",out:"Out of stock",instock:"in stock",cart:"Your cart",empty:"Your cart is empty.",total:"Total",name:"Full name",phone:"Phone number",addr:"Delivery address (district, sector)",order:"Send order on WhatsApp",fits:"Fits",cond:"Condition",new:"New",used:"Used",rm:"Remove",need:"Please enter your name, phone and address.",pay:"Pay with MoMo or cash on delivery.",none:"No products match your search.",reset:"Clear Filters",foot:"© 2026 AutoGear Rwanda. Premium automotive spare parts.",hi:"Hello AutoGear, I want to order:",tl:"Total",cu:"Customer",ph:"Phone",ad:"Address"},
+fr:{search:"Rechercher des pièces...",h1:"Pièces détachées d'origine, livrées",h2:"Freins, filtres, moteur, électricité et plus pour Toyota, Suzuki, Hyundai, Honda et autres.",t1:"🚚 Livraison dans tout le Rwanda",t2:"💳 MoMo ou paiement à la livraison",t3:"✅ Qualité contrôlée",all:"Tout",allmk:"Toutes les marques",engine:"Moteur",brakes:"Freins",suspension:"Suspension",filters:"Filtres",electrical:"Électricité",body:"Carrosserie",tyres:"Pneus",oils:"Huiles",cooling:"Refroidissement",transmission:"Transmission",exhaust:"Échappement",accessories:"Accessoires",s0:"Tri : Sélection",s1:"Prix croissant",s2:"Prix décroissant",items:"produits",add:"Ajouter au panier",out:"Rupture de stock",instock:"en stock",cart:"Votre panier",empty:"Votre panier est vide.",total:"Total",name:"Nom complet",phone:"Téléphone",addr:"Adresse de livraison (district, secteur)",order:"Envoyer la commande sur WhatsApp",fits:"Compatible",cond:"État",new:"Neuf",used:"Occasion",rm:"Retirer",need:"Veuillez saisir votre nom, téléphone et adresse.",pay:"Paiement par MoMo ou à la livraison.",none:"Aucun produit trouvé.",reset:"Effacer les filtres",foot:"© 2026 AutoGear Rwanda. Pièces détachées de haute qualité.",hi:"Bonjour AutoGear, je souhaite commander :",tl:"Total",cu:"Client",ph:"Téléphone",ad:"Adresse"},
+rw:{search:"Shakisha ibyuma by'imodoka...",h1:"Ibyuma by'imodoka nyabyo, bikugezwaho",h2:"Fereni, filitiri, moteri, amashanyarazi n'ibindi bya Toyota, Suzuki, Hyundai, Honda n'izindi.",t1:"🚚 Tugezaho mu Rwanda hose",t2:"💳 MoMo cyangwa wishyure ubonye",t3:"✅ Ubuziranenge bwizewe",all:"Byose",allmk:"Ubwoko bwose bw'imodoka",engine:"Moteri",brakes:"Fereni",suspension:"Suspansiyo",filters:"Filitiri",electrical:"Amashanyarazi",body:"Umubiri w'imodoka",tyres:"Amapine",oils:"Amavuta",cooling:"Gukonjesha",transmission:"Garebokisi",exhaust:"Eshapema",accessories:"Ibindi bikoresho",s0:"Gutondeka: Byatoranyijwe",s1:"Igiciro: gito ujya hejuru",s2:"Igiciro: hejuru ujya hasi",items:"ibicuruzwa",add:"Shyira mu gaseke",out:"Byashize",instock:"biraboneka",cart:"Agaseke kawe",empty:"Agaseke kawe karimo ubusa.",total:"Yose hamwe",name:"Amazina yose",phone:"Nimero ya telefone",addr:"Aho tugeza (akarere, umurenge)",order:"Ohereza itegeko kuri WhatsApp",fits:"Ikwiranye na",cond:"Imiterere",new:"Gishya",used:"Cyakoreshejwe",rm:"Kuramo",need:"Andika izina, telefone n'aho tugeza.",pay:"Wishyura MoMo cyangwa ubonye ibicuruzwa.",none:"Nta gicuruzwa kibonetse.",reset:"Siba ibyatoranyijwe",foot:"© 2026 AutoGear Rwanda. Ibyuma by'imodoka by'ubuziranenge.",hi:"Muraho AutoGear, nshaka gutumiza:",tl:"Yose hamwe",cu:"Umukiriya",ph:"Telefone",ad:"Aho tugeza"}
+};
+
+var CATS=["engine","brakes","suspension","filters","electrical","body","tyres","oils","cooling","transmission","exhaust","accessories"];
+var MAKES=["Toyota","Suzuki","Hyundai","Kia","Honda","Nissan","Mitsubishi","Mazda","Subaru","Volkswagen"];
+
+// Store products array (Easy for you to add, edit or remove items)
+var R=[
+["Front Brake Pads","brakes","Toyota","Corolla, RAV4",28000,14,"https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?w=500&auto=format&fit=crop&q=60"],
+["Rear Brake Pads","brakes","Toyota","Corolla, Vitz",24000,12,"https://images.unsplash.com/photo-1552806725-d0658700ef58?w=500&auto=format&fit=crop&q=60"],
+["Oil Filter","filters","Toyota,Suzuki","Vitz, Swift, Corolla",6000,60,"https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&auto=format&fit=crop&q=60"],
+["Air Filter","filters","Hyundai","Tucson, Accent",9000,25,"https://images.unsplash.com/photo-1635784063991-f865805f6312?w=500&auto=format&fit=crop&q=60"],
+["Spark Plugs (set of 4)","engine","Honda,Nissan","Civic, CR-V, X-Trail",22000,30,"https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?w=500&auto=format&fit=crop&q=60"],
+["Front Shock Absorber","suspension","Toyota","Hilux, Land Cruiser",85000,8,"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop&q=60"],
+["Car Battery 70Ah","electrical","","Universal 12V",110000,20,"https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop&q=60"],
+["Engine Oil 5W-30 (4L)","oils","","Petrol engines",38000,40,"https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=500&auto=format&fit=crop&q=60"],
+["Tyre 205/55 R16","tyres","","Most sedans",95000,18,"https://images.unsplash.com/photo-1578844251758-2f71da64c96f?w=500&auto=format&fit=crop&q=60"],
+["Radiator","cooling","Nissan","Navara, X-Trail",120000,5,"https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=500&auto=format&fit=crop&q=60"]
+];
+
+var P=R.map(function(r,i){
+  return {id:i+1,n:r[0],c:r[1],mk:r[2]?r[2].split(","):[],fit:r[3],p:r[4],st:r[5],img:r[6],d:(i%4===0?"used":"new")}
+});
+
+var lang="en",theme="",cat="all",cart={};
+
+try{
+  lang=localStorage.getItem("ag_lang")||"en";
+  theme=localStorage.getItem("ag_theme")||"";
+  cart=JSON.parse(localStorage.getItem("ag_cart")||"{}");
+}catch(e){}
+
+function t(k){return T[lang][k]||T.en[k]||k}
+function $(i){return document.getElementById(i)}
+function fmt(n){return n.toLocaleString("en-US")+" RWF"}
+function save(){try{localStorage.setItem("ag_cart",JSON.stringify(cart))}catch(e){}}
+function byId(i){return P.filter(function(x){return x.id==i})[0]}
+
+function setTheme(v){
+  theme=v;
+  if(v) document.documentElement.setAttribute("data-theme",v);
+  else document.documentElement.removeAttribute("data-theme");
+  try{localStorage.setItem("ag_theme",v)}catch(e){}
+}
+if(theme) setTheme(theme);
+
+function labels(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t(e.dataset.i)});
+  $("q").placeholder=t("search");
+  document.querySelectorAll(".lang button").forEach(function(b){b.classList.toggle("on",b.dataset.l===lang)});
+  
+  var m=$("mk").value,s=$("so").value;
+  $("mk").innerHTML='<option value="">'+t("allmk")+'</option>'+MAKES.map(function(k){return '<option>'+k+'</option>'}).join("");
+  $("so").innerHTML=[0,1,2].map(function(i){return '<option value="'+i+'">'+t("s"+i)+'</option>'}).join("");
+  $("mk").value=m;$("so").value=s||"0";
+  
+  $("chips").innerHTML=["all"].concat(CATS).map(function(k){
+    return '<button class="chip'+(k===cat?' on':'')+'" data-c="'+k+'">'+t(k)+'</button>'
+  }).join("");
+}
+
+function shop(){
+  var q=$("q").value.toLowerCase(),m=$("mk").value,so=$("so").value;
+  
+  if(q || m || cat!=="all"){
+    $("reset-btn").style.display="inline-block";
+  }else{
+    $("reset-btn").style.display="none";
+  }
+
+  var l=P.filter(function(x){
+    return (cat==="all"||x.c===cat)&&(!m||!x.mk.length||x.mk.indexOf(m)>-1)&&(x.n+" "+x.fit).toLowerCase().indexOf(q)>-1;
+  });
+
+  if(so==="1") l.sort(function(a,b){return a.p-b.p});
+  if(so==="2") l.sort(function(a,b){return b.p-a.p});
+
+  $("cnt").textContent=l.length+" "+t("items");
+  $("grid").innerHTML=l.length?l.map(function(x){
+    return '<div class="card">'+
+      '<div class="pic" data-v="'+x.id+'">'+
+        '<img src="'+x.img+'" alt="'+x.n+'" onerror="this.src=\'https://via.placeholder.com/300x200?text=AutoGear\'">'+
+        (x.d==="used"?'<span class="badge">'+t("used")+'</span>':'')+
+      '</div>'+
+      '<div class="bd">'+
+        '<h3 data-v="'+x.id+'">'+x.n+'</h3>'+
+        '<div class="fit">'+x.fit+'</div>'+
+        '<div class="price">'+fmt(x.p)+'</div>'+
+        '<div class="stk'+(x.st?'':' o')+'">'+(x.st?x.st+' '+t("instock"):t("out"))+'</div>'+
+        '<button class="add" data-a="'+x.id+'"'+(x.st?'':' disabled')+'>'+t("add")+'</button>'+
+      '</div>'+
+    '</div>';
+  }).join(""):'<div class="mut" style="grid-column:1/-1;text-align:center;padding:40px">'+t("none")+'</div>';
+}
+
+function drawCart(){
+  var ids=Object.keys(cart).filter(function(i){return byId(i)}),n=0,tot=0;
+  ids.forEach(function(i){n+=cart[i];tot+=cart[i]*byId(i).p});
+  $("cn").textContent=n;
+  
+  $("items").innerHTML=ids.length?ids.map(function(i){
+    var x=byId(i);
+    return '<div class="ci">'+
+      '<img src="'+x.img+'" alt="'+x.n+'">'+
+      '<div class="t"><b>'+x.n+'</b><br>'+fmt(x.p)+'<br><a href="#" data-r="'+i+'" style="color:#e11d48;font-size:12px">'+t("rm")+'</a></div>'+
+      '<div class="q"><button data-m="'+i+'">−</button><span>'+cart[i]+'</span><button data-p="'+i+'">+</button></div>'+
+    '</div>';
+  }).join(""):'<p class="mut">'+t("empty")+'</p>';
+
+  $("foot2").innerHTML=ids.length?
+    '<div class="tot"><span>'+t("total")+'</span><span>'+fmt(tot)+'</span></div>'+
+    '<div class="f">'+
+      '<input id="cn1" placeholder="'+t("name")+'">'+
+      '<input id="cp" type="tel" placeholder="'+t("phone")+'">'+
+      '<input id="ca" placeholder="'+t("addr")+'">'+
+      '<div style="font-size:12px;color:var(--mut)">'+t("pay")+'</div>'+
+      '<button class="send" data-send="1">'+t("order")+'</button>'+
+    '</div>':'';
+}
+
+function add(i,n){
+  var x=byId(i);
+  cart[i]=Math.min(x.st,Math.max(0,(cart[i]||0)+n));
+  if(cart[i]<=0) delete cart[i];
+  save();
+  drawCart();
+}
+
+function modal(i){
+  var x=byId(i);
+  $("md").innerHTML='<button class="x" data-x="1">✕</button>'+
+    '<div class="pic"><img src="'+x.img+'" alt="'+x.n+'"></div>'+
+    '<h2 style="margin:8px 0 4px">'+x.n+'</h2>'+
+    '<div class="price" style="margin-bottom:12px">'+fmt(x.p)+'</div>'+
+    '<p class="mut" style="line-height:1.6">'+t(x.c)+' · '+t("fits")+': '+(x.mk.length?x.mk.join(", ")+' – ':'')+x.fit+'<br>'+
+    t("cond")+': '+t(x.d)+'<br>'+
+    (x.st?x.st+' '+t("instock"):t("out"))+'</p>'+
+    '<button class="add" style="width:100%" data-a="'+x.id+'"'+(x.st?'':' disabled')+'>'+t("add")+'</button>';
+  $("ov").classList.add("on");
+}
+
+function resetFilters(){
+  cat="all";
+  $("q").value="";
+  $("mk").value="";
+  $("so").value="0";
+  labels();
+  shop();
+}
+
+document.addEventListener("click",function(e){
+  var g=function(a){var el=e.target.closest("["+a+"]");return el?el.getAttribute(a):null};
+  var v;
+  if(v=g("data-l")){lang=v;try{localStorage.setItem("ag_lang",v)}catch(x){}labels();shop();drawCart();return}
+  if(v=g("data-c")){cat=v;labels();shop();return}
+  if(v=g("data-v")){modal(v);return}
+  if(v=g("data-a")){add(v,1);$("dr").classList.add("on");$("ov").classList.remove("on");return}
+  if(v=g("data-p")){add(v,1);return}
+  if(v=g("data-m")){add(v,-1);return}
+  if(v=g("data-r")){e.preventDefault();delete cart[v];save();drawCart();return}
+  if(g("data-x")||e.target===$("ov")){$("ov").classList.remove("on");return}
+  if(g("data-send")){
+    var nm=$("cn1").value.trim(),ph=$("cp").value.trim(),ad=$("ca").value.trim();
+    if(!nm||!ph||!ad){alert(t("need"));return}
+    var tot=0,lines=Object.keys(cart).map(function(i){var x=byId(i);tot+=x.p*cart[i];return "- "+x.n+" x"+cart[i]+" = "+fmt(x.p*cart[i])});
+    var msg=t("hi")+"\n"+lines.join("\n")+"\n"+t("tl")+": "+fmt(tot)+"\n"+t("cu")+": "+nm+"\n"+t("ph")+": "+ph+"\n"+t("ad")+": "+ad;
+    window.open("https://wa.me/"+SHOP+"?text="+encodeURIComponent(msg),"_blank");
+  }
+});
+
+$("reset-btn").onclick=resetFilters;
+$("cb").onclick=function(){$("dr").classList.add("on")};
+$("cx").onclick=function(){$("dr").classList.remove("on")};
+$("th").onclick=function(){setTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark")};
+["q","mk","so"].forEach(function(i){$(i).addEventListener("input",shop)});
+
+labels();
+shop();
+drawCart();
+</script>
+</body>
+</html>

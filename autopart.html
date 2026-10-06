@@ -1,339 +1,1251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AutoGear Rwanda – Car Spare Parts</title>
-<style>
-:root{
-  --bg:#f8fafc;--card:#ffffff;--ink:#0f172a;--mut:#64748b;
-  --acc:#ea580c;--acc2:#0d9488;--line:#e2e8f0;
-  --shadow:0 4px 12px rgba(0,0,0,.05);
-  box-sizing:border-box;
-}
-@media(prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f172a;--card:#1e293b;--ink:#f8fafc;--mut:#94a3b8;
-    --line:#334155;--shadow:0 4px 16px rgba(0,0,0,.3);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0f172a;--card:#1e293b;--ink:#f8fafc;--mut:#94a3b8;
-  --line:#334155;--shadow:0 4px 16px rgba(0,0,0,.3);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="zAZGGe5GFkVkPBMfcgzvKlDN7e0Qwo2axLAkbicL2x4" />
+  <title>AutoGear Rwanda – Genuine Car Spare Parts & Accessories</title>
+  <meta name="description" content="Buy genuine Toyota, Suzuki, Hyundai, Honda, and Heavy Duty Truck spare parts in Kigali, Rwanda. Fast delivery across Rwanda.">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
 
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;line-height:1.5}
-button,input,select{font:inherit;color:inherit}
-button{cursor:pointer;border:none;background:none}
+    :root {
+      --bg: #0b0f19;
+      --card: #151c2e;
+      --input: #0b0f19;
+      --border: #232d42;
+      --txt: #ffffff;
+      --mut: #8b9bb4;
+      --acc: #f97316;
+      --acc-h: #ea580c;
+      --green: #10b981;
+      --momo: #ffcc00;
+      --pill-bg: #1e293b;
+      --pic-bg: #fdfbf7;
+    }
 
-header{
-  position:sticky;top:0;z-index:30;
-  background:var(--card);border-bottom:1px solid var(--line);
-  padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;
-}
-.logo{font-weight:800;font-size:22px;white-space:nowrap}.logo b{color:var(--acc)}
-.search{flex:1;min-width:200px}
-input,select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 14px;width:100%;outline:none}
-input:focus,select:focus{border-color:var(--acc)}
+    body.light-theme {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --input: #f1f5f9;
+      --border: #cbd5e1;
+      --txt: #0f172a;
+      --mut: #64748b;
+      --pill-bg: #e2e8f0;
+      --pic-bg: #e2e8f0;
+    }
 
-.ic{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;font-size:15px}
-.lang{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
-.lang button{background:var(--card);padding:7px 11px;font-size:13px;font-weight:600;border-right:1px solid var(--line)}
-.lang button:last-child{border-right:none}
-.lang button.on{background:var(--acc);color:#fff}
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--txt);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
 
-.cartb{position:relative;background:var(--acc);color:#fff;border-radius:10px;padding:9px 16px;font-weight:700;display:flex;align-items:center;gap:8px}
-.cartb span#cn{background:#fff;color:var(--acc);border-radius:20px;padding:2px 8px;font-size:12px;font-weight:800}
+    img, svg {
+      max-width: 100%;
+      height: auto;
+    }
 
-.hero{background:linear-gradient(135deg,#064e3b 0%,#0f172a 60%,#1e293b 100%);color:#fff;padding:48px 20px;text-align:center}
-.hero h1{margin:0 0 10px;font-size:clamp(26px,4vw,38px);font-weight:800}
-.hero p{margin:0 auto;max-width:600px;opacity:.9;font-size:15px}
-.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px;font-size:13px}
-.trust span{background:rgba(255,255,255,.12);padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1)}
+    /* Top Navigation Header */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-main{max-width:1280px;margin:0 auto;padding:24px 20px}
-.bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
-.bar select{width:auto;min-width:160px}
-.btn-reset{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--mut)}
-.btn-reset:hover{color:var(--ink);border-color:var(--ink)}
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--acc);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:7px 16px;white-space:nowrap;font-size:13px;font-weight:600}
-.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .search-bar {
+      flex-grow: 1;
+      max-width: 600px;
+      position: relative;
+    }
 
-.count{color:var(--mut);font-size:14px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
-.card{background:var(--card);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+    .search-bar input {
+      width: 100%;
+      background: var(--input);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      color: var(--txt);
+      font-size: 14px;
+      outline: none;
+    }
 
-.pic{height:160px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
-.pic img{width:100%;height:100%;object-fit:cover;transition:transform 0.2s ease}
-.card:hover .pic img{transform:scale(1.04)}
-.badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;text-transform:uppercase;background:var(--acc2);color:#fff;border-radius:6px;padding:3px 8px}
+    .search-bar input:focus { border-color: var(--acc); }
 
-.bd{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
-.bd h3{margin:0;font-size:16px;font-weight:700;cursor:pointer}
-.fit{font-size:13px;color:var(--mut);flex:1}
-.price{font-weight:800;font-size:19px;color:var(--acc);margin-top:4px}
-.stk{font-size:12px;font-weight:600;color:var(--acc2)}
-.stk.o{color:#e11d48}
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
 
-.add{background:var(--acc);color:#fff;border-radius:10px;padding:10px;font-weight:700;margin-top:8px;width:100%}
-.add[disabled]{opacity:.5;cursor:not-allowed}
+    .lang-btn-group {
+      display: flex;
+      background: var(--input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px;
+    }
 
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;display:none;align-items:center;justify-content:center;padding:16px}
-.ov.on{display:flex}
-.modal{background:var(--card);border-radius:16px;max-width:500px;width:100%;max-height:90vh;overflow:auto;padding:24px;position:relative}
-.modal .pic{height:220px;border-radius:12px;cursor:default;margin-bottom:16px}
-.x{position:absolute;top:14px;right:14px;border:1px solid var(--line);background:var(--bg);border-radius:50%;width:32px;height:32px;font-weight:700}
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--mut);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+    }
 
-.dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--card);z-index:50;transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column;padding:20px;border-left:1px solid var(--line)}
-.dr.on{transform:translateX(0)}
-.items{flex:1;overflow-y:auto;margin:16px 0}
-.ci{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.ci img{width:54px;height:54px;object-fit:cover;border-radius:8px;background:#f1f5f9}
-.ci div.t{flex:1;font-size:13px}
-.q{display:flex;align-items:center;gap:6px}
-.q button{width:26px;height:26px;border:1px solid var(--line);background:var(--bg);border-radius:6px;font-weight:700}
+    .lang-btn.active {
+      background: var(--acc);
+      color: #fff;
+    }
 
-.tot{display:flex;justify-content:space-between;font-weight:800;font-size:18px;margin:16px 0}
-.f{display:grid;gap:10px}
-.send{background:#16a34a;color:#fff;border-radius:10px;padding:12px;font-weight:700;font-size:15px}
+    .theme-btn {
+      background: var(--input);
+      border: 1px solid var(--border);
+      color: #f59e0b;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 20px;border-top:1px solid var(--line);margin-top:40px}
-</style>
+    .cart-btn {
+      background: var(--acc);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .cart-badge {
+      background: #fff;
+      color: var(--acc);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* Sub-header Filter Bar */
+    .filter-bar {
+      padding: 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dropdown-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .select-dropdown {
+      background: var(--input);
+      border: 1px solid var(--border);
+      color: var(--txt);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    /* Category Pill Buttons */
+    .category-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-pills::-webkit-scrollbar { display: none; }
+
+    .pill {
+      background: var(--pill-bg);
+      color: var(--mut);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .pill:hover, .pill.active {
+      background: var(--acc);
+      color: #fff;
+      border-color: var(--acc);
+    }
+
+    /* Hero Image Slideshow Banner */
+    .hero-slider {
+      position: relative;
+      width: calc(100% - 64px);
+      margin: 0 32px 24px;
+      height: 260px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active { opacity: 1; }
+
+    .slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35);
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 700px;
+    }
+
+    .slide-content h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      font-weight: 800;
+    }
+
+    .slide-content p {
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.85;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 3;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--acc);
+      width: 20px;
+      border-radius: 10px;
+    }
+
+    /* Product Grid */
+    .content-area { padding: 0 32px 40px; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pic {
+      width: 100%;
+      height: 180px;
+      background: var(--pic-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bd {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .bd h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0;
+      color: var(--txt);
+    }
+
+    .fit {
+      font-size: 13px;
+      color: var(--mut);
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--acc);
+      margin-top: 8px;
+    }
+
+    .stk {
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .add {
+      background: var(--acc);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 0 20px 20px;
+      transition: background 0.2s;
+    }
+
+    .add:hover { background: var(--acc-h); }
+
+    /* Footer Section */
+    .site-footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 48px 32px 24px;
+      margin-top: 40px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+    }
+
+    .footer-col h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 16px;
+      color: var(--txt);
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col li {
+      color: var(--mut);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .footer-brand {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--acc);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-desc {
+      color: var(--mut);
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 280px;
+    }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 32px;
+      margin-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--mut);
+      font-size: 13px;
+    }
+
+    /* Upgraded Shopping Cart Modal Drawer */
+    .cart-modal {
+      position: fixed;
+      top: 0; 
+      right: -100%;
+      width: 420px;
+      max-width: 100%;
+      height: 100%;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      z-index: 200;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+    .cart-modal.open { right: 0; }
+    
+    .cart-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: var(--input);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .cart-item img {
+      width: 60px; height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #000;
+    }
+
+    .qty-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--txt);
+      width: 24px; height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Checkout & Payment Form */
+    .checkout-form {
+      background: var(--input);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkout-form h4 {
+      margin: 0 0 4px;
+      font-size: 14px;
+      color: var(--txt);
+    }
+
+    .checkout-form input, .checkout-form select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--txt);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      width: 100%;
+    }
+
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .btn-checkout-momo {
+      width: 100%;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-checkout-momo:hover { opacity: 0.9; }
+
+    .empty-msg {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--mut);
+    }
+
+    /* Responsive Mobile Styles */
+    @media (max-width: 768px) {
+      header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .search-bar {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .header-right {
+        gap: 8px;
+      }
+
+      .cart-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+
+      .filter-bar {
+        padding: 12px 16px;
+      }
+
+      .dropdown-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .select-dropdown {
+        width: 100%;
+      }
+
+      .hero-slider {
+        width: calc(100% - 32px);
+        margin: 0 16px 16px;
+        height: 180px;
+        border-radius: 12px;
+      }
+
+      .slide-content h1 {
+        font-size: 18px;
+      }
+
+      .slide-content p {
+        font-size: 12px;
+      }
+
+      .content-area {
+        padding: 0 16px 24px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+
+      .bd {
+        padding: 12px;
+      }
+
+      .bd h3 {
+        font-size: 14px;
+      }
+
+      .price {
+        font-size: 16px;
+      }
+
+      .add {
+        margin: 0 12px 12px;
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .site-footer {
+        padding: 32px 16px 16px;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .cart-modal {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
+<!-- Header -->
 <header>
-  <div class="logo">Auto<b>Gear</b></div>
-  <input class="search" id="q" placeholder="Search spare parts...">
-  <div class="lang">
-    <button data-l="en">EN</button>
-    <button data-l="fr">FR</button>
-    <button data-l="rw">RW</button>
+  <div class="logo" onclick="resetFilters()">AutoGear</div>
+
+  <div class="search-bar">
+    <input type="text" id="q" placeholder="Search spare parts..." oninput="shop()">
   </div>
-  <button class="ic" id="th" aria-label="Theme">🌓</button>
-  <button class="cartb" id="cb"><span>🛒</span><span id="cn">0</span></button>
+
+  <div class="header-right">
+    <div class="lang-btn-group">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="btn-rw" onclick="setLang('rw')">RW</button>
+    </div>
+
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle Theme">◐</button>
+
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 <span id="txt-cart">Cart</span> <span class="cart-badge" id="cart-cnt">0</span>
+    </button>
+  </div>
 </header>
 
-<section class="hero">
-  <h1 data-i="h1">Genuine spare parts, delivered</h1>
-  <p data-i="h2">Brakes, filters, engine, electrical and more for Toyota, Suzuki, Hyundai, Honda and others.</p>
-  <div class="trust">
-    <span data-i="t1">🚚 Delivery across Rwanda</span>
-    <span data-i="t2">💳 MoMo or cash on delivery</span>
-    <span data-i="t3">✅ Quality checked</span>
+<!-- Filter Controls Bar -->
+<div class="filter-bar">
+  <div class="dropdown-row">
+    <select class="select-dropdown" id="mk" onchange="onMakeChange()">
+      <option value="" id="opt-all-makes">All vehicle makes</option>
+    </select>
+
+    <select class="select-dropdown" id="md" onchange="shop()">
+      <option value="" id="opt-all-models">All vehicle models</option>
+    </select>
+
+    <select class="select-dropdown" id="so" onchange="shop()">
+      <option value="0" id="opt-sort-def">Sort: Featured</option>
+      <option value="1" id="opt-sort-low">Price: Low to High</option>
+      <option value="2" id="opt-sort-high">Price: High to Low</option>
+    </select>
   </div>
+
+  <!-- Category Pills -->
+  <div class="category-pills" id="pills"></div>
+</div>
+
+<!-- Hero Slideshow Banner -->
+<section class="hero-slider">
+  <div class="slide active">
+    <img src="https://www.jcwhitney.com/wp-content/uploads/2024/05/Common-Car-Parts-and-Their-Functions-A-Guide-3.webp" alt="Car Parts">
+    <div class="slide-content">
+      <h1 id="hero-h1">Genuine Spare Parts Delivered Across Rwanda</h1>
+      <p id="hero-p">Engine components, brakes, filters, tyres, and fluids for cars, SUVs, and commercial trucks.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=1200&q=80" alt="Maintenance Parts">
+    <div class="slide-content">
+      <h1 id="hero2-h1">Quality Assured Automotive Solutions</h1>
+      <p id="hero2-p">Fast delivery directly to your garage or home in Kigali and across provinces.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=1200&q=80" alt="Truck Parts">
+    <div class="slide-content">
+      <h1 id="hero3-h1">Heavy Duty Commercial & Truck Parts</h1>
+      <p id="hero3-p">Dedicated spares and specifications for HOWO, Scania, Isuzu, Fuso, and Mercedes trucks.</p>
+    </div>
+  </div>
+
+  <div class="slider-dots" id="dots"></div>
 </section>
 
-<main>
-  <div class="bar">
-    <select id="mk"></select>
-    <select id="so"></select>
-    <button class="btn-reset" id="reset-btn" style="display:none" data-i="reset">Clear Filters</button>
+<!-- Content Area -->
+<div class="content-area">
+  <div class="products-grid" id="grid">
+    <div class="empty-msg" id="txt-loading">Loading inventory...</div>
   </div>
-  <div class="chips" id="chips"></div>
-  <div class="count" id="cnt"></div>
-  <div class="grid" id="grid"></div>
-</main>
+</div>
 
-<footer data-i="foot">© 2026 AutoGear Rwanda. Premium automotive spare parts.</footer>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <!-- Brand Col -->
+    <div class="footer-col">
+      <div class="footer-brand">AUTOGEAR</div>
+      <p class="footer-brand-desc">Genuine car &amp; truck spare parts in Kigali, delivered across Rwanda.</p>
+    </div>
 
-<div class="ov" id="ov"><div class="modal" id="md"></div></div>
+    <!-- Help Column -->
+    <div class="footer-col">
+      <h3>Help</h3>
+      <ul>
+        <li><strong>Delivery:</strong> Same-day delivery within Kigali; 24-hour dispatch to all provinces.</li>
+        <li><strong>Returns & Warranty:</strong> 7-day hassle-free return on uninstalled parts in original condition.</li>
+        <li><strong>Payment:</strong> We accept Mobile Money (MTN/Airtel) and Cash on Delivery.</li>
+        <li><strong>Support:</strong> Direct WhatsApp support available 6 days a week for part confirmation.</li>
+      </ul>
+    </div>
 
-<div class="dr" id="dr">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0;font-size:20px" data-i="cart">Your cart</h2>
-    <button class="ic" id="cx">✕</button>
+    <!-- Company Column -->
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li><strong>About Us:</strong> Your trusted automotive parts supplier in Kigali since 2024.</li>
+        <li><strong>Quality Guarantee:</strong> 100% verified genuine OEM & high-grade aftermarket components.</li>
+        <li><strong>Privacy & Safety:</strong> We handle customer order data securely and confidentially.</li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <ul class="contact-list">
+        <li>📍 KK 15 Rd, Gikondo / Nyarugenge, Kigali</li>
+        <li>💬 +250 786 894 918</li>
+        <li>✉️ info@autogear.rw</li>
+        <li>🕒 Mon–Sat 8:00–18:00</li>
+      </ul>
+    </div>
   </div>
-  <div class="items" id="items"></div>
-  <div id="foot2"></div>
+
+  <div class="footer-bottom">
+    © 2026 AutoGear Rwanda. All rights reserved.
+  </div>
+</footer>
+
+<!-- Upgraded Shopping Cart Modal Drawer -->
+<div class="cart-modal" id="cart-drawer">
+  <div class="cart-header">
+    <h3 style="margin:0;" id="txt-cart-title">Shopping Cart</h3>
+    <button style="background:none; border:none; color:var(--txt); font-size:20px; cursor:pointer;" onclick="toggleCart()">✕</button>
+  </div>
+
+  <div class="cart-body">
+    <!-- Item List -->
+    <div id="cart-list">
+      <div class="empty-msg" id="txt-cart-empty">Your cart is empty.</div>
+    </div>
+
+    <!-- Customer & Delivery Form (Hidden when empty) -->
+    <div class="checkout-form" id="checkout-form-sec" style="display: none;">
+      <h4>Delivery Information</h4>
+      <input type="text" id="cust-name" placeholder="Full Name (e.g. Jean Paul)" oninput="clearCartError()">
+      <input type="tel" id="cust-phone" placeholder="Phone Number / WhatsApp (e.g. 0788XXXXXX)" oninput="clearCartError()">
+      <input type="text" id="cust-loc" placeholder="Delivery Address / Landmark (e.g. Kimironko near BK, KK 15 Rd)" oninput="clearCartError()">
+      
+      <!-- Inline Error Container -->
+      <div id="cart-error-msg" style="display: none; color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 10px; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; margin-top: 4px;"></div>
+
+      <!-- Store Contact & Physical Location Card -->
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 8px; font-size: 12px; color: var(--mut); line-height: 1.6;">
+        <div style="color: var(--txt); font-weight: 700; margin-bottom: 4px; font-size: 13px;">📍 AutoGear Store Contact & Location:</div>
+        <div><b>Address:</b> KK 15 Rd, Gikondo / Nyarugenge, Kigali</div>
+        <div><b>WhatsApp:</b> +250 786 894 918</div>
+        <div><b>Email:</b> info@autogear.rw</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Footer (Hidden when empty) -->
+  <div class="cart-footer" id="cart-footer-sec" style="display: none;">
+    <div style="display:flex; justify-content:space-between; font-weight:800; font-size:18px; margin-bottom:16px;">
+      <span id="txt-cart-total">Total:</span>
+      <span id="cart-total-val" style="color:var(--acc);">0 RWF</span>
+    </div>
+    <button class="btn-checkout-momo" onclick="checkout()" id="btn-checkout">
+      💬 Place Order via WhatsApp
+    </button>
+  </div>
 </div>
 
 <script>
-var SHOP = "250788000000"; // Replace with your WhatsApp number
-var SHEETDB_URL = "https://sheetdb.io/api/v1/zem4vg4aablym"; // Paste your SheetDB API link here
-
-var T = {
-en:{search:"Search spare parts...",h1:"Genuine spare parts, delivered",h2:"Brakes, filters, engine, electrical and more for Toyota, Suzuki, Hyundai, Honda and others.",t1:"🚚 Delivery across Rwanda",t2:"💳 MoMo or cash on delivery",t3:"✅ Quality checked",all:"All",allmk:"All vehicle makes",engine:"Engine",brakes:"Brakes",suspension:"Suspension",filters:"Filters",electrical:"Electrical",body:"Body",tyres:"Tyres",oils:"Oils",cooling:"Cooling",transmission:"Transmission",exhaust:"Exhaust",accessories:"Accessories",s0:"Sort: Featured",s1:"Price: low to high",s2:"Price: high to low",items:"products",add:"Add to cart",out:"Out of stock",instock:"in stock",cart:"Your cart",empty:"Your cart is empty.",total:"Total",name:"Full name",phone:"Phone number",addr:"Delivery address (district, sector)",order:"Send order on WhatsApp",fits:"Fits",cond:"Condition",new:"New",used:"Used",rm:"Remove",need:"Please enter your name, phone and address.",pay:"Pay with MoMo or cash on delivery.",none:"No products match your search.",reset:"Clear Filters",foot:"© 2026 AutoGear Rwanda. Premium automotive spare parts.",hi:"Hello AutoGear, I want to order:",tl:"Total",cu:"Customer",ph:"Phone",ad:"Address"},
-fr:{search:"Rechercher des pièces...",h1:"Pièces détachées d'origine, livrées",h2:"Freins, filtres, moteur, électricité et plus pour Toyota, Suzuki, Hyundai, Honda et autres.",t1:"🚚 Livraison dans tout le Rwanda",t2:"💳 MoMo ou paiement à la livraison",t3:"✅ Qualité contrôlée",all:"Tout",allmk:"Toutes les marques",engine:"Moteur",brakes:"Freins",suspension:"Suspension",filters:"Filtres",electrical:"Électricité",body:"Carrosserie",tyres:"Pneus",oils:"Huiles",cooling:"Refroidissement",transmission:"Transmission",exhaust:"Échappement",accessories:"Accessoires",s0:"Tri : Sélection",s1:"Prix croissant",s2:"Prix décroissant",items:"produits",add:"Ajouter au panier",out:"Rupture de stock",instock:"en stock",cart:"Votre panier",empty:"Votre panier est vide.",total:"Total",name:"Nom complet",phone:"Téléphone",addr:"Adresse de livraison (district, secteur)",order:"Envoyer la commande sur WhatsApp",fits:"Compatible",cond:"État",new:"Neuf",used:"Occasion",rm:"Retirer",need:"Veuillez saisir votre nom, téléphone et adresse.",pay:"Paiement par MoMo ou à la livraison.",none:"Aucun produit trouvé.",reset:"Effacer les filtres",foot:"© 2026 AutoGear Rwanda. Pièces détachées de haute qualité.",hi:"Bonjour AutoGear, je souhaite commander :",tl:"Total",cu:"Client",ph:"Téléphone",ad:"Adresse"},
-rw:{search:"Shakisha ibyuma by'imodoka...",h1:"Ibyuma by'imodoka nyabyo, bikugezwaho",h2:"Fereni, filitiri, moteri, amashanyarazi n'ibindi bya Toyota, Suzuki, Hyundai, Honda n'izindi.",t1:"🚚 Tugezaho mu Rwanda hose",t2:"💳 MoMo cyangwa wishyure ubonye",t3:"✅ Ubuziranenge bwizewe",all:"Byose",allmk:"Ubwoko bwose bw'imodoka",engine:"Moteri",brakes:"Fereni",suspension:"Suspansiyo",filters:"Filitiri",electrical:"Amashanyarazi",body:"Umubiri w'imodoka",tyres:"Amapine",oils:"Amavuta",cooling:"Gukonjesha",transmission:"Garebokisi",exhaust:"Eshapema",accessories:"Ibindi bikoresho",s0:"Gutondeka: Byatoranyijwe",s1:"Igiciro: gito ujya hejuru",s2:"Igiciro: hejuru ujya hasi",items:"ibicuruzwa",add:"Shyira mu gaseke",out:"Byashize",instock:"biraboneka",cart:"Agaseke kawe",empty:"Agaseke kawe karimo ubusa.",total:"Yose hamwe",name:"Amazina yose",phone:"Nimero ya telefone",addr:"Aho tugeza (akarere, umurenge)",order:"Ohereza itegeko kuri WhatsApp",fits:"Ikwiranye na",cond:"Imiterere",new:"Gishya",used:"Cyakoreshejwe",rm:"Kuramo",need:"Andika izina, telefone n'aho tugeza.",pay:"Wishyura MoMo cyangwa ubonye ibicuruzwa.",none:"Nta gicuruzwa kibonetse.",reset:"Siba ibyatoranyijwe",foot:"© 2026 AutoGear Rwanda. Ibyuma by'imodoka by'ubuziranenge.",hi:"Muraho AutoGear, nshaka gutumiza:",tl:"Yose hamwe",cu:"Umukiriya",ph:"Telefone",ad:"Aho tugeza"}
+// Translations Matrix
+var currentLang = "en";
+var I18N = {
+  en: {
+    cart: "Cart", search: "Search spare parts...", all_makes: "All vehicle makes", all_models: "All vehicle models",
+    sort_def: "Sort: Featured", sort_low: "Price: Low to High", sort_high: "Price: High to Low",
+    h1: "Genuine Spare Parts Delivered Across Rwanda", p1: "Engine components, brakes, filters, tyres, and fluids for cars, SUVs, and commercial trucks.",
+    h2: "Quality Assured Automotive Solutions", p2: "Fast delivery directly to your garage or home in Kigali and across provinces.",
+    h3: "Heavy Duty Commercial & Truck Parts", p3: "Dedicated spares and specifications for HOWO, Scania, Isuzu, Fuso, and Mercedes trucks.",
+    loading: "Loading inventory...", empty: "No products found.", instock: "in stock", add: "Add to cart",
+    cart_title: "Shopping Cart", cart_empty: "Your cart is empty.", total: "Total:", checkout: "💬 Place Order via WhatsApp", products: "products",
+    cats: { all:"All", engine:"Engine", brakes:"Brakes", suspension:"Suspension", filters:"Filters", electrical:"Electrical", body:"Body", tyres:"Tyres", oils:"Oils", cooling:"Cooling", transmission:"Transmission", exhaust:"Exhaust", accessories:"Accessories" }
+  },
+  fr: {
+    cart: "Panier", search: "Rechercher des pièces...", all_makes: "Toutes les marques", all_models: "Tous les modèles",
+    sort_def: "Trier: En vedette", sort_low: "Prix: Bas à Élevé", sort_high: "Prix: Élevé à Bas",
+    h1: "Pièces de rechange d'origine livrées au Rwanda", p1: "Composants moteur, freins, filtres, pneus et lubrifiants pour tous véhicules.",
+    h2: "Solutions Automobiles de Qualité", p2: "Livraison rapide à Kigali et dans toutes les provinces.",
+    h3: "Pièces pour Camions et Poids Lourds", p3: "Pièces spécialisées pour HOWO, Scania, Isuzu, Fuso et Mercedes.",
+    loading: "Chargement de l'inventaire...", empty: "Aucun produit trouvé.", instock: "en stock", add: "Ajouter au panier",
+    cart_title: "Mon Panier", cart_empty: "Votre panier est vide.", total: "Total:", checkout: "💬 Commander via WhatsApp", products: "produits",
+    cats: { all:"Tous", engine:"Moteur", brakes:"Freins", suspension:"Suspension", filters:"Filtres", electrical:"Électricité", body:"Carrosserie", tyres:"Pneus", oils:"Huiles", cooling:"Refroidissement", transmission:"Transmission", exhaust:"Échappement", accessories:"Accessoires" }
+  },
+  rw: {
+    cart: "Ikarita", search: "Shakisha ibipimo...", all_makes: "Ubwoko bw'imodoka bwose", all_models: "Ubwoko bwose bwa model",
+    sort_def: "Gushyira mu gahunda: Reka dutangire", sort_low: "Ibiciro: Hasi kugera Hejuru", sort_high: "Ibiciro: Hejuru kugera Hasi",
+    h1: "Ibizibuzo by'imodoka by'umwimerere mu Rwanda", p1: "Pisine, feri, akayunguruzo, amapine n mefuta y binyabiziga vyose.",
+    h2: "Ibizibuzo byizewe ku modoka yawe", p2: "Kugeza vuba mu Mujyi wa Kigali no mu Ntara zose.",
+    h3: "Ibizibuzo by'Ibinyabiziga Binini n'Amakamyo", p3: "Ibipimo by'amakamyo HOWO, Scania, Isuzu, Fuso na Mercedes.",
+    loading: "Gutegura ibicuruzwa...", empty: "Nta gicuruzwa kibonetse.", instock: "ziri mu stoke", add: "Ongeraho",
+    cart_title: "Ikarita Yanjye", cart_empty: "Ikarita yawe ntabwo irimo ibintu.", total: "Igiteranyo:", checkout: "💬 Oherereza Komande via WhatsApp", products: "ibicuruzwa",
+    cats: { all:"Byose", engine:"Moteur", brakes:"Feri", suspension:"Suspension", filters:"Akayunguruzo", electrical:"Amashanyarazi", body:"Igihimba", tyres:"Amapine", oils:"Amavuta", cooling:"Kwangisha", transmission:"Kurongora", exhaust:"Umwuka", accessories:"Ibindi" }
+  }
 };
 
-var CATS = ["engine","brakes","suspension","filters","electrical","body","tyres","oils","cooling","transmission","exhaust","accessories"];
-var MAKES = ["Toyota","Suzuki","Hyundai","Kia","Honda","Nissan","Mitsubishi","Mazda","Subaru","Volkswagen"];
+var CATEGORIES = ["all", "engine", "brakes", "suspension", "filters", "electrical", "body", "tyres", "oils", "cooling", "transmission", "exhaust", "accessories"];
 
-var P = [];
-var lang = "en", theme = "", cat = "all", cart = {};
+var VEHICLE_DATA = {
+  "HOWO / Sinotruk": ["All HOWO", "HOWO 371 Dump Truck", "HOWO A7 Tractor Head", "HOWO T5G", "HOWO Light Truck"],
+  "Scania": ["All Scania", "R-Series (R420/R500)", "G-Series (G460)", "P-Series Tipper"],
+  "Isuzu": ["All Isuzu", "NPR Light Truck", "NQR Medium Truck", "FRR Heavy Truck", "FSR Tipper", "D-Max Pickup"],
+  "Mitsubishi Fuso": ["All Fuso", "Canter Light Truck", "Fuso Fighter", "Fuso Super Great", "Rosa Bus", "Pajero", "L200 Triton"],
+  "Toyota": ["All Toyota", "Corolla", "Yaris / Vitz", "RAV4", "Land Cruiser / Prado", "Hilux Pickup", "HiAce Van", "Coaster Bus", "Land Cruiser 70 Pickup", "Fortuner", "Avensis", "Rush", "Harrier", "Wish"],
+  "Suzuki": ["All Suzuki", "Alto", "Swift", "Grand Vitara", "Jimny 4x4", "Ertiga", "Carry Pickup", "Baleno", "SX4"],
+  "Hyundai": ["All Hyundai", "Grand i10", "Accent", "Elantra", "Tucson", "Santa Fe", "Creta", "H100 Light Truck", "Staria"],
+  "Honda": ["All Honda", "Fit / Jazz", "Civic", "CR-V", "HR-V", "Accord", "Pilot"],
+  "Nissan": ["All Nissan", "Sunny", "March", "X-Trail", "Qashqai", "Navara Pickup", "Patrol 4x4", "Hardbody NP300", "Urvan Bus"],
+  "Mercedes-Benz": ["All Mercedes", "Actros Heavy Truck", "Atego Truck", "Sprinter Van", "Vito", "C-Class", "E-Class", "S-Class", "GLE / ML", "G-Class"],
+  "BMW": ["All BMW", "3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X6"],
+  "Volkswagen": ["All Volkswagen", "Polo", "Golf", "Passat", "Tiguan", "Touareg", "Amarok Pickup", "Transporter / Caravelle"],
+  "Ford": ["All Ford", "Ranger Pickup", "Everest SUV", "Transit Commercial Van", "EcoSport", "Focus"],
+  "Kia": ["All Kia", "Picanto", "Rio", "Cerato", "Sportage", "Sorento", "K2700 / K2500 Light Truck", "Carnival"],
+  "Subaru": ["All Subaru", "Impreza", "Forester", "Outback", "XV"],
+  "Land Rover": ["All Land Rover", "Defender 4x4", "Range Rover", "Range Rover Sport", "Discovery"],
+  "FAW": ["All FAW", "J6P Dump Truck", "Tiger V Light Truck", "Jiefang"],
+  "Tata": ["All Tata", "Prima Heavy Truck", "LPT 709/1109 Truck", "Xenon Pickup"],
+  "Volvo": ["All Volvo", "FH Heavy Truck", "FM Truck", "XC60", "XC90"]
+};
 
-try {
-  lang = localStorage.getItem("ag_lang") || "en";
-  theme = localStorage.getItem("ag_theme") || "";
-  cart = JSON.parse(localStorage.getItem("ag_cart") || "{}");
-} catch(e){}
+var P = [], cart = [], activeCat = "all";
+var DEFAULT_SVG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200' viewBox='0 0 300 200'><rect width='100%' height='100%' fill='%23fdfbf7'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='16'>No Image</text></svg>";
 
-function t(k){ return T[lang][k] || T.en[k] || k; }
-function $(i){ return document.getElementById(i); }
-function fmt(n){ return Number(n).toLocaleString("en-US") + " RWF"; }
-function save(){ try{ localStorage.setItem("ag_cart", JSON.stringify(cart)); }catch(e){} }
-function byId(i){ return P.filter(function(x){ return x.id == i; })[0]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]}); }
+function fmt(n){ return Number(n || 0).toLocaleString() + " RWF"; }
 
-function setTheme(v){
-  theme = v;
-  if(v) document.documentElement.setAttribute("data-theme", v);
-  else document.documentElement.removeAttribute("data-theme");
-  try { localStorage.setItem("ag_theme", v); } catch(e){}
+// Theme Toggle
+function toggleTheme() {
+  document.body.classList.toggle("light-theme");
+  var isLight = document.body.classList.contains("light-theme");
+  localStorage.setItem("theme", isLight ? "light" : "dark");
 }
-if(theme) setTheme(theme);
 
-function labels(){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i]").forEach(function(e){ e.textContent = t(e.dataset.i); });
-  $("q").placeholder = t("search");
-  document.querySelectorAll(".lang button").forEach(function(b){ b.classList.toggle("on", b.dataset.l === lang); });
-  
-  var m = $("mk").value, s = $("so").value;
-  $("mk").innerHTML = '<option value="">' + t("allmk") + '</option>' + MAKES.map(function(k){ return '<option>' + k + '</option>'; }).join("");
-  $("so").innerHTML = [0,1,2].map(function(i){ return '<option value="' + i + '">' + t("s" + i) + '</option>'; }).join("");
-  $("mk").value = m; $("so").value = s || "0";
-  
-  $("chips").innerHTML = ["all"].concat(CATS).map(function(k){
-    return '<button class="chip' + (k === cat ? ' on' : '') + '" data-c="' + k + '">' + t(k) + '</button>';
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light-theme");
+}
+
+// Language Switcher
+function setLang(lang) {
+  currentLang = lang;
+  var dict = I18N[lang] || I18N.en;
+
+  ["en", "fr", "rw"].forEach(function(l){
+    if($("btn-" + l)) $("btn-" + l).classList.toggle("active", l === lang);
+  });
+
+  $("txt-cart").textContent = dict.cart;
+  $("q").placeholder = dict.search;
+  $("opt-all-makes").textContent = dict.all_makes;
+  $("opt-all-models").textContent = dict.all_models;
+  $("opt-sort-def").textContent = dict.sort_def;
+  $("opt-sort-low").textContent = dict.sort_low;
+  $("opt-sort-high").textContent = dict.sort_high;
+
+  $("hero-h1").textContent = dict.h1;
+  $("hero-p").textContent = dict.p1;
+  $("hero2-h1").textContent = dict.h2;
+  $("hero2-p").textContent = dict.p2;
+  $("hero3-h1").textContent = dict.h3;
+  $("hero3-p").textContent = dict.p3;
+
+  $("txt-cart-title").textContent = dict.cart_title;
+  $("txt-cart-empty").textContent = dict.cart_empty;
+  $("txt-cart-total").textContent = dict.total;
+  $("btn-checkout").textContent = dict.checkout;
+
+  initCategoryPills();
+  shop();
+}
+
+function initCategoryPills() {
+  var dict = I18N[currentLang] || I18N.en;
+  $("pills").innerHTML = CATEGORIES.map(function(cId){
+    var label = (dict.cats && dict.cats[cId]) ? dict.cats[cId] : cId;
+    return '<button class="pill '+(cId === activeCat ? 'active' : '')+'" onclick="selectCat(\''+cId+'\')">'+label+'</button>';
   }).join("");
+
+  var currentMakeVal = $("mk").value;
+  $("mk").innerHTML = '<option value="">'+dict.all_makes+'</option>' + Object.keys(VEHICLE_DATA).map(function(m){
+    return '<option value="'+m+'">'+m+'</option>';
+  }).join("");
+  $("mk").value = currentMakeVal;
+}
+
+function selectCat(catId) {
+  activeCat = catId;
+  initCategoryPills();
+  shop();
+}
+
+function onMakeChange() {
+  var selectedMake = $("mk").value;
+  var dict = I18N[currentLang] || I18N.en;
+  var models = VEHICLE_DATA[selectedMake] || [];
+  
+  $("md").innerHTML = '<option value="">'+dict.all_models+'</option>' + models.map(function(m){
+    return '<option value="'+m+'">'+m+'</option>';
+  }).join("");
+
+  shop();
+}
+
+// Supabase Connection
+var SUPABASE_URL = "https://ezcbfegkpffdponwnijv.supabase.co";
+var SUPABASE_ANON_KEY = "sb_publishable_wuHZ6QwUngPvIypqFpv0vg_1l0SkLsy";
+var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadProducts(){
+  try {
+    var { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+    if(data && !error){
+      P = data.map(function(r){
+        return {
+          id: r.id,
+          n: r.name,
+          c: r.category,
+          mk: r.make ? r.make.toLowerCase().split(",") : [],
+          fit: r.fit || "",
+          p: Number(r.price) || 0,
+          st: Number(r.stock) || 10,
+          img: r.image_url || DEFAULT_SVG
+        };
+      });
+    }
+  } catch(e) {
+    console.error(e);
+  }
+  shop();
 }
 
 function shop(){
-  var q = $("q").value.toLowerCase(), m = $("mk").value, so = $("so").value;
-  
-  if(q || m || cat !== "all"){
-    $("reset-btn").style.display = "inline-block";
-  } else {
-    $("reset-btn").style.display = "none";
-  }
+  var dict = I18N[currentLang] || I18N.en;
+  var q = ($("q") ? $("q").value : "").toLowerCase().trim();
+  var m = ($("mk") ? $("mk").value : "").toLowerCase().trim();
+  var md = ($("md") ? $("md").value : "").toLowerCase().trim();
+  var so = $("so") ? $("so").value : "0";
 
-  var l = P.filter(function(x){
-    return (cat === "all" || x.c === cat) && (!m || !x.mk.length || x.mk.indexOf(m) > -1) && (x.n + " " + x.fit).toLowerCase().indexOf(q) > -1;
+  var filtered = P.filter(function(x){
+    var matchCat = false;
+    if(activeCat === "all") matchCat = true;
+    else if(activeCat === "tyres" || activeCat === "tires") matchCat = (x.c === "tyres" || x.c === "tires");
+    else matchCat = (x.c === activeCat);
+
+    var matchMake = true;
+    if(m) {
+      matchMake = x.mk.some(function(brand){ return brand.indexOf(m) > -1; }) || 
+                  x.n.toLowerCase().indexOf(m) > -1 || 
+                  x.fit.toLowerCase().indexOf(m) > -1;
+    }
+
+    var matchModel = true;
+    if(md && !md.startsWith("all")) {
+      matchModel = x.fit.toLowerCase().indexOf(md) > -1 || x.n.toLowerCase().indexOf(md) > -1;
+    }
+
+    var matchQuery = true;
+    if(q) {
+      var fullSearchTarget = (x.n + " " + x.fit + " " + x.c).toLowerCase();
+      matchQuery = fullSearchTarget.indexOf(q) > -1;
+    }
+
+    return matchCat && matchMake && matchModel && matchQuery;
   });
 
-  if(so === "1") l.sort(function(a,b){ return a.p - b.p; });
-  if(so === "2") l.sort(function(a,b){ return b.p - a.p; });
+  if(so === "1") filtered.sort(function(a,b){ return a.p - b.p; });
+  if(so === "2") filtered.sort(function(a,b){ return b.p - a.p; });
 
-  $("cnt").textContent = l.length + " " + t("items");
-  $("grid").innerHTML = l.length ? l.map(function(x){
-    return '<div class="card">' +
-      '<div class="pic" data-v="' + x.id + '">' +
-        '<img src="' + x.img + '" alt="' + x.n + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x200?text=AutoGear\'">' +
-        (x.d === "used" ? '<span class="badge">' + t("used") + '</span>' : '') +
-      '</div>' +
-      '<div class="bd">' +
-        '<h3 data-v="' + x.id + '">' + x.n + '</h3>' +
-        '<div class="fit">' + x.fit + '</div>' +
-        '<div class="price">' + fmt(x.p) + '</div>' +
-        '<div class="stk' + (x.st ? '' : ' o') + '">' + (x.st ? x.st + ' ' + t("instock") : t("out")) + '</div>' +
-        '<button class="add" data-a="' + x.id + '"' + (x.st ? '' : ' disabled') + '>' + t("add") + '</button>' +
-      '</div>' +
+  $("grid").innerHTML = filtered.length ? filtered.map(function(x){
+    return '<div class="card">'+
+      '<div class="pic">'+
+        '<img src="'+x.img+'" alt="'+esc(x.n)+'" onerror="this.onerror=null;this.src=DEFAULT_SVG;">'+
+      '</div>'+
+      '<div class="bd">'+
+        '<h3>'+esc(x.n)+'</h3>'+
+        '<div class="fit">'+esc(x.fit || "Universal Fit")+'</div>'+
+        '<div class="price">'+fmt(x.p)+'</div>'+
+        '<div class="stk">'+x.st+' '+dict.instock+'</div>'+
+      '</div>'+
+      '<button class="add" onclick="addToCart('+x.id+')">'+dict.add+'</button>'+
     '</div>';
-  }).join("") : '<div class="mut" style="grid-column:1/-1;text-align:center;padding:40px">' + t("none") + '</div>';
+  }).join("") : '<div class="empty-msg">'+dict.empty+'</div>';
 }
 
-function drawCart(){
-  var ids = Object.keys(cart).filter(function(i){ return byId(i); }), n = 0, tot = 0;
-  ids.forEach(function(i){ n += cart[i]; tot += cart[i] * byId(i).p; });
-  $("cn").textContent = n;
-  
-  $("items").innerHTML = ids.length ? ids.map(function(i){
-    var x = byId(i);
-    return '<div class="ci">' +
-      '<img src="' + x.img + '" alt="' + x.n + '">' +
-      '<div class="t"><b>' + x.n + '</b><br>' + fmt(x.p) + '<br><a href="#" data-r="' + i + '" style="color:#e11d48;font-size:12px">' + t("rm") + '</a></div>' +
-      '<div class="q"><button data-m="' + i + '">−</button><span>' + cart[i] + '</span><button data-p="' + i + '">+</button></div>' +
-    '</div>';
-  }).join("") : '<p class="mut">' + t("empty") + '</p>';
-
-  $("foot2").innerHTML = ids.length ?
-    '<div class="tot"><span>' + t("total") + '</span><span>' + fmt(tot) + '</span></div>' +
-    '<div class="f">' +
-      '<input id="cn1" placeholder="' + t("name") + '">' +
-      '<input id="cp" type="tel" placeholder="' + t("phone") + '">' +
-      '<input id="ca" placeholder="' + t("addr") + '">' +
-      '<div style="font-size:12px;color:var(--mut)">' + t("pay") + '</div>' +
-      '<button class="send" data-send="1">' + t("order") + '</button>' +
-    '</div>' : '';
+function resetFilters() {
+  $("q").value = ""; $("mk").value = ""; $("md").value = ""; $("so").value = "0";
+  selectCat("all");
 }
 
-function add(i, n){
-  var x = byId(i);
-  cart[i] = Math.min(x.st, Math.max(0, (cart[i] || 0) + n));
-  if(cart[i] <= 0) delete cart[i];
-  save();
-  drawCart();
+/* Shopping Cart Logic */
+function toggleCart() {
+  $("cart-drawer").classList.toggle("open");
 }
 
-function modal(i){
-  var x = byId(i);
-  $("md").innerHTML = '<button class="x" data-x="1">✕</button>' +
-    '<div class="pic"><img src="' + x.img + '" alt="' + x.n + '"></div>' +
-    '<h2 style="margin:8px 0 4px">' + x.n + '</h2>' +
-    '<div class="price" style="margin-bottom:12px">' + fmt(x.p) + '</div>' +
-    '<p class="mut" style="line-height:1.6">' + t(x.c) + ' · ' + t("fits") + ': ' + (x.mk.length ? x.mk.join(", ") + ' – ' : '') + x.fit + '<br>' +
-    t("cond") + ': ' + t(x.d || "new") + '<br>' +
-    (x.st ? x.st + ' ' + t("instock") : t("out")) + '</p>' +
-    '<button class="add" style="width:100%" data-a="' + x.id + '"' + (x.st ? '' : ' disabled') + '>' + t("add") + '</button>';
-  $("ov").classList.add("on");
-}
+function addToCart(id) {
+  var prod = P.find(function(p){ return p.id === id; });
+  if(!prod) return;
 
-function loadFromSheet(){
-  fetch(SHEETDB_URL)
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      P = data.map(function(r, i){
-        return {
-          id: i + 1,
-          n: r.name || "",
-          c: r.category || "accessories",
-          mk: r.make ? r.make.split(",") : [],
-          fit: r.fit || "",
-          p: parseInt(r.price) || 0,
-          st: parseInt(r.stock) || 0,
-          img: r.image_url || "https://via.placeholder.com/300x200?text=AutoGear",
-          d: "new"
-        };
-      });
-      shop();
-      drawCart();
-    })
-    .catch(function(err){ console.error("Error loading products:", err); });
-}
-
-document.addEventListener("click", function(e){
-  var g = function(a){ var el = e.target.closest("[" + a + "]"); return el ? el.getAttribute(a) : null; };
-  var v;
-  if(v = g("data-l")){ lang = v; try{ localStorage.setItem("ag_lang", v); }catch(x){} labels(); shop(); drawCart(); return; }
-  if(v = g("data-c")){ cat = v; labels(); shop(); return; }
-  if(v = g("data-v")){ modal(v); return; }
-  if(v = g("data-a")){ add(v, 1); $("dr").classList.add("on"); $("ov").classList.remove("on"); return; }
-  if(v = g("data-p")){ add(v, 1); return; }
-  if(v = g("data-m")){ add(v, -1); return; }
-  if(v = g("data-r")){ e.preventDefault(); delete cart[v]; save(); drawCart(); return; }
-  if(g("data-x") || e.target === $("ov")){ $("ov").classList.remove("on"); return; }
-  if(g("data-send")){
-    var nm = $("cn1").value.trim(), ph = $("cp").value.trim(), ad = $("ca").value.trim();
-    if(!nm || !ph || !ad){ alert(t("need")); return; }
-    var tot = 0, lines = Object.keys(cart).map(function(i){ var x = byId(i); tot += x.p * cart[i]; return "- " + x.n + " x" + cart[i] + " = " + fmt(x.p * cart[i]); });
-    var msg = t("hi") + "\n" + lines.join("\n") + "\n" + t("tl") + ": " + fmt(tot) + "\n" + t("cu") + ": " + nm + "\n" + t("ph") + ": " + ph + "\n" + t("ad") + ": " + ad;
-    window.open("https://wa.me/" + SHOP + "?text=" + encodeURIComponent(msg), "_blank");
+  var existing = cart.find(function(item){ return item.id === id; });
+  if(existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: prod.id, name: prod.n, fit: prod.fit, price: prod.p, img: prod.img, qty: 1 });
   }
-});
 
-$("reset-btn").onclick = function(){ cat="all"; $("q").value=""; $("mk").value=""; $("so").value="0"; labels(); shop(); };
-$("cb").onclick = function(){ $("dr").classList.add("on"); };
-$("cx").onclick = function(){ $("dr").classList.remove("on"); };
-$("th").onclick = function(){ setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"); };
-["q","mk","so"].forEach(function(i){ $(i).addEventListener("input", shop); });
+  updateCartUI();
+  $("cart-drawer").classList.add("open");
+}
 
-labels();
-loadFromSheet();
+function changeQty(id, delta) {
+  var item = cart.find(function(i){ return i.id === id; });
+  if(!item) return;
+
+  item.qty += delta;
+  if(item.qty <= 0) {
+    cart = cart.filter(function(i){ return i.id !== id; });
+  }
+  updateCartUI();
+}
+
+function updateCartUI() {
+  var dict = I18N[currentLang] || I18N.en;
+  var totalItems = cart.reduce(function(sum, item){ return sum + item.qty; }, 0);
+  var totalPrice = cart.reduce(function(sum, item){ return sum + (item.price * item.qty); }, 0);
+
+  $("cart-cnt").textContent = totalItems;
+  $("cart-total-val").textContent = fmt(totalPrice);
+
+  if(cart.length === 0) {
+    $("cart-list").innerHTML = '<div class="empty-msg">'+dict.cart_empty+'</div>';
+    if ($("checkout-form-sec")) $("checkout-form-sec").style.display = "none";
+    if ($("cart-footer-sec")) $("cart-footer-sec").style.display = "none";
+    return;
+  }
+
+  if ($("checkout-form-sec")) $("checkout-form-sec").style.display = "flex";
+  if ($("cart-footer-sec")) $("cart-footer-sec").style.display = "block";
+
+  $("cart-list").innerHTML = cart.map(function(item){
+    return '<div class="cart-item">' +
+      '<img src="'+item.img+'" alt="" onerror="this.src=DEFAULT_SVG;">' +
+      '<div style="flex-grow:1;">' +
+        '<div style="font-size:13px; font-weight:700;">'+esc(item.name)+'</div>' +
+        '<div style="font-size:11px; color:var(--mut);">'+esc(item.fit || 'Standard Fit')+'</div>' +
+        '<div style="font-size:13px; color:var(--acc); font-weight:800; margin-top:2px;">'+fmt(item.price * item.qty)+'</div>' +
+      '</div>' +
+      '<div style="display:flex; align-items:center; gap:6px;">' +
+        '<button class="qty-btn" onclick="changeQty('+item.id+', -1)">-</button>' +
+        '<span style="font-size:13px; font-weight:800; min-width:16px; text-align:center;">'+item.qty+'</span>' +
+        '<button class="qty-btn" onclick="changeQty('+item.id+', 1)">+</button>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function showCartError(msg) {
+  var errDiv = $("cart-error-msg");
+  if (errDiv) {
+    errDiv.textContent = msg;
+    errDiv.style.display = "block";
+  }
+}
+
+function clearCartError() {
+  var errDiv = $("cart-error-msg");
+  if (errDiv) {
+    errDiv.style.display = "none";
+    errDiv.textContent = "";
+  }
+}
+
+function checkout() {
+  clearCartError();
+
+  if (cart.length === 0) {
+    showCartError("Please add at least one spare part to your cart.");
+    return;
+  }
+
+  var name = $("cust-name").value.trim();
+  var phone = $("cust-phone").value.trim();
+  var loc = $("cust-loc").value.trim();
+
+  if (!name) {
+    showCartError("Please enter your full name.");
+    $("cust-name").focus();
+    return;
+  }
+  if (!phone) {
+    showCartError("Please enter your phone or WhatsApp number.");
+    $("cust-phone").focus();
+    return;
+  }
+  if (!loc) {
+    showCartError("Please enter your delivery address or landmark.");
+    $("cust-loc").focus();
+    return;
+  }
+
+  var itemsList = cart.map(function(i){
+    return i.qty + "x " + i.name + " (" + (i.fit || 'Universal Fit') + ")";
+  }).join("%0A - ");
+
+  var totalPrice = $("cart-total-val").textContent;
+  var storeWhatsAppNumber = "250786894918"; 
+
+  var msg = "Hello AutoGear Rwanda!%0A%0AI would like to order the following spare parts:%0A - " + itemsList + 
+            "%0A%0A*Total Price:* " + encodeURIComponent(totalPrice) + 
+            "%0A%0A*Customer & Delivery Details:*%0A- *Name:* " + encodeURIComponent(name) + 
+            "%0A- *Phone:* " + encodeURIComponent(phone) + 
+            "%0A- *Delivery Address:* " + encodeURIComponent(loc);
+
+  window.open("https://wa.me/" + storeWhatsAppNumber + "?text=" + msg, "_blank");
+
+  cart = [];
+  updateCartUI();
+  toggleCart();
+}
+
+/* Hero Slideshow */
+function initSlider() {
+  var slides = document.querySelectorAll(".slide");
+  var dotsContainer = document.getElementById("dots");
+  if (!slides.length || !dotsContainer) return;
+
+  var current = 0;
+  dotsContainer.innerHTML = "";
+
+  slides.forEach(function(_, i) {
+    var dot = document.createElement("div");
+    dot.className = "dot" + (i === 0 ? " active" : "");
+    dot.onclick = function() { setSlide(i); };
+    dotsContainer.appendChild(dot);
+  });
+
+  var dots = dotsContainer.querySelectorAll(".dot");
+
+  function setSlide(index) {
+    slides[current].classList.remove("active");
+    dots[current].classList.remove("active");
+    current = index;
+    slides[current].classList.add("active");
+    dots[current].classList.add("active");
+  }
+
+  setInterval(function() {
+    var next = (current + 1) % slides.length;
+    setSlide(next);
+  }, 4000);
+}
+
+// Start
+initSlider();
+setLang("en");
+loadProducts();
 </script>
+
 </body>
 </html>
